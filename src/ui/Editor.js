@@ -90,7 +90,7 @@ export class Editor {
       selector.setValue(names.includes(state.selected) ? state.selected : (names[0] ?? ''));
     };
 
-    folder.add(state, '이름').name('이름');
+    folder.add(state, 'name').name('이름');
 
     folder
       .add(
@@ -268,7 +268,7 @@ export class Editor {
 
     const h = settings.haze;
     const haze = folder.addFolder('원경 헤이즈');
-    haze.add(h, '활성화').name('헤이즈 활성화');
+    haze.add(h, 'enabled').name('헤이즈 활성화');
     haze.addColor(h, 'color').name('헤이즈 색상');
     haze.addColor(h, 'sunColor').name('달 방향 색상');
     // 1/m, so the number itself means very little; the readout under it is what
@@ -303,8 +303,8 @@ export class Editor {
 
     const s = settings.sky;
     const sky = folder.addFolder('하늘');
-    sky.add(s, '활성화').name('하늘 활성화');
-    sky.addColor(s, '천정').name('천정');
+    sky.add(s, 'enabled').name('하늘 활성화');
+    sky.addColor(s, 'zenith').name('천정');
     R(sky, s, 'gradient', 0.1, 3, 0.01, '그라데이션');
     R(sky, s, 'sunGlow', 0, 12, 0.05, '달 후광');
     R(sky, s, 'sunGlowPower', 1, 60, 0.5, '후광 집중도');
@@ -367,7 +367,7 @@ export class Editor {
     // more in and shrinks each one.
     const stars = sky.addFolder('별');
     const st = s.stars;
-    stars.add(st, '활성화').name('별 활성화');
+    stars.add(st, 'enabled').name('별 활성화');
     R(stars, st, 'density', 40, 600, 5, '밀도');
     R(stars, st, 'brightness', 0, 6, 0.05, '밝기');
     R(stars, st, 'twinkle', 0, 1, 0.01, '반짝임');
@@ -392,7 +392,7 @@ export class Editor {
     const f = settings.groundFog;
     const R = Editor.range;
 
-    folder.add(f, '활성화').name('활성화');
+    folder.add(f, 'enabled').name('활성화');
     // Density is `count` against `life`: a slot respawns the instant it dies, so
     // the emitter is releasing count/life puffs a second. `count` is also the
     // fill-rate dial — it is the first thing to turn down if the frame is tight.
@@ -456,7 +456,7 @@ export class Editor {
     const t = settings.terrain;
     const R = Editor.range;
 
-    folder.add(t, '활성화').name('지형 활성화');
+    folder.add(t, 'enabled').name('지형 활성화');
     R(folder, t, 'amplitude', 0, 20, 0.05, '높이 (m)');
     R(folder, t, 'scale', 8, 200, 1, '언덕 크기 (m)');
     // The one real cost dial: the floor evaluates this field five times per
@@ -508,7 +508,7 @@ export class Editor {
     const g = settings.leaves;
     const R = Editor.range;
 
-    folder.add(g, '활성화').name('낙엽 활성화');
+    folder.add(g, 'enabled').name('낙엽 활성화');
     R(folder, g, 'size', 0.02, 0.6, 0.005, '잎 길이 (m)');
     R(folder, g, 'sizeVariance', 0, 0.9, 0.01, '크기 편차');
 
@@ -552,7 +552,7 @@ export class Editor {
     /* ---- the ground ---- */
     const l = g.litter;
     const litter = folder.addFolder('낙엽 더미 (지면 위)');
-    litter.add(l, '활성화').name('낙엽 더미 활성화');
+    litter.add(l, 'enabled').name('낙엽 더미 활성화');
     // The two cost dials. Live like everything else — they only decide where
     // the leaves are laid out, so moving one re-lays the grid rather than
     // rebuilding a buffer. `perCell` × 400 is the leaf count.
@@ -609,7 +609,7 @@ export class Editor {
     /* ---- the air ---- */
     const d = g.drift;
     const drift = folder.addFolder('흐름 (공중)');
-    drift.add(d, '활성화').name('흐름 활성화');
+    drift.add(d, 'enabled').name('흐름 활성화');
     R(drift, d, 'count', 0, 1024, 1, '잎 수 (비용)');
     R(drift, d, 'radius', 2, 90, 0.5, '스폰 반경 (m)');
     R(drift, d, 'life', 2, 60, 0.5, '수명 (초)');
@@ -655,7 +655,7 @@ export class Editor {
     const R = Editor.range;
     const weapon = () => this.hooks.getWeaponFire?.() ?? null;
 
-    folder.add(f, '활성화').name('활성화');
+    folder.add(f, 'enabled').name('활성화');
     R(folder, f, 'intensity', 0, 3, 0.01, '강도');
 
     // What is alight. `faces` is the count the box is currently keeping — the
@@ -705,7 +705,7 @@ export class Editor {
     // it is how much burning gas there is off the steel, in metres.
     const volume = folder.addFolder('불꽃 본체');
     const v = f.volume;
-    volume.add(v, '활성화').name('활성화');
+    volume.add(v, 'enabled').name('활성화');
     R(volume, v, 'thickness', 0.002, 0.3, 0.001, '두께 (m)');
     R(volume, v, 'plume', 1, 6, 0.01, '기류 늘림');
     R(volume, v, 'length', 0.05, 2, 0.01, '기류 길이 (m)');
@@ -762,7 +762,7 @@ export class Editor {
     // stops the key light's specular sitting on top of it.
     const steel = folder.addFolder('달궈진 강철');
     const s = f.steel;
-    steel.add(s, '활성화').name('활성화');
+    steel.add(s, 'enabled').name('활성화');
     R(steel, s, 'amount', 0, 3, 0.01, 'glow');
     R(steel, s, 'tempCore', 1000, 4000, 10, '최고 온도 (K)');
     R(steel, s, 'tempEdge', 900, 3000, 10, '최저 온도 (K)');
@@ -781,7 +781,7 @@ export class Editor {
     // blur that keeps them from reading as dots.
     const embers = folder.addFolder('불씨');
     const em = f.embers;
-    embers.add(em, '활성화').name('활성화');
+    embers.add(em, 'enabled').name('활성화');
 
     const live = {
       get count() {
@@ -826,7 +826,7 @@ export class Editor {
 
     const light = folder.addFolder('불빛');
     const li = f.light;
-    light.add(li, '활성화').name('활성화');
+    light.add(li, 'enabled').name('활성화');
     R(light, li, 'intensity', 0, 60, 0.1, '강도 (cd)');
     R(light, li, 'distance', 0.5, 15, 0.1, '도달 거리 (m)');
     R(light, li, 'decay', 0, 3, 0.01, '감쇠');
@@ -951,7 +951,7 @@ export class Editor {
     folder
       .add({ cast: () => this.hooks.onCastJudgement?.() }, 'cast')
       .name('가장 가까운 적에게 소환');
-    folder.add(j, '활성화').name('활성화');
+    folder.add(j, 'enabled').name('활성화');
     R(folder, j, 'height', 1.2, 12, 0.05, '인 높이 (m)');
 
     // The choreography. `fall` is the only one that is about force rather than
@@ -1064,7 +1064,7 @@ export class Editor {
     // emitted, which is exactly why it sells the impact.
     const dust = folder.addFolder('먼지와 흙');
     const d = j.dust;
-    dust.add(d, '활성화').name('활성화');
+    dust.add(d, 'enabled').name('활성화');
     R(dust, d, 'puffs', 0, 120, 1, '먼지 펑');
     R(dust, d, 'clods', 0, 160, 1, '흙 덩어리');
     R(dust, d, 'speed', 0.5, 20, 0.1, '발사 (m/s)');
@@ -1087,7 +1087,7 @@ export class Editor {
 
     const light = folder.addFolder('그 빛');
     const l = j.light;
-    light.add(l, '활성화').name('활성화');
+    light.add(l, 'enabled').name('활성화');
     light.addColor(l, 'color').name('인 색상');
     light.addColor(l, 'flashColor').name('contact colour');
     R(light, l, 'intensity', 0, 60, 0.5, '모으는 동안');
@@ -1111,7 +1111,7 @@ export class Editor {
     const f = settings.flight;
     const R = Editor.range;
 
-    folder.add(f, '활성화').name('활성화');
+    folder.add(f, 'enabled').name('활성화');
     R(folder, f, 'height', 1, 20, 0.1, '순항 고도 (m)');
     R(folder, f, 'speed', 1, 30, 0.1, '순항 (m/s)');
     R(folder, f, 'boost', 1, 40, 0.1, '부스트 — 이동 (m/s)');
@@ -1137,7 +1137,7 @@ export class Editor {
     // landing starts, so its impact frame is the frame they land on.
     const down = folder.addFolder('착지');
     const r = f.recover;
-    down.add(r, '활성화').name('착지 동작');
+    down.add(r, 'enabled').name('착지 동작');
     R(down, r, 'lead', 0, 1, 0.01, '조기 시작 (초)');
     R(down, r, 'blendIn', 0.02, 1, 0.01, '페이드 인 (초)');
     R(down, r, 'blendOut', 0.02, 1.5, 0.01, '대기 복귀 시간 (초)');
@@ -1209,7 +1209,7 @@ export class Editor {
     // The hit: one burst and a shower of sparks out of one buffer.
     const hit = blades.addFolder('타격');
     const im = b.impact;
-    hit.add(im, '활성화').name('활성화');
+    hit.add(im, 'enabled').name('활성화');
     hit.addColor(im, 'color').name('섬광 색상');
     hit.addColor(im, 'ringColor').name('ring colour');
     R(hit, im, 'size', 0.2, 6, 0.05, '크기 (m)');
@@ -1231,7 +1231,7 @@ export class Editor {
 
     const light = blades.addFolder('그 빛');
     const li = b.light;
-    light.add(li, '활성화').name('활성화');
+    light.add(li, 'enabled').name('활성화');
     light.addColor(li, 'color').name('halo colour');
     light.addColor(li, 'flashColor').name('contact colour');
     R(light, li, 'intensity', 0, 60, 0.5, '모이는 동안');
@@ -1246,7 +1246,7 @@ export class Editor {
     const p = settings.post;
     const R = Editor.range;
 
-    folder.add(p, '활성화').name('활성화');
+    folder.add(p, 'enabled').name('활성화');
     // The only anti-aliasing in the project — the scene never touches the canvas
     // directly, so the renderer's own flag has nothing to act on. It is also the
     // heaviest thing in the stack, hence a dial rather than a constant.
@@ -1319,7 +1319,7 @@ export class Editor {
     const l = settings.locomotion;
     const R = Editor.range;
 
-    folder.add(l, '활성화').name('조작 활성화');
+    folder.add(l, 'enabled').name('조작 활성화');
 
     // How fast the body travels. The stride rate divides these by the clip
     // speeds below, so raising one speeds the legs up to match.
@@ -1347,7 +1347,7 @@ export class Editor {
     // the reach of the jump in metres — 0 hands it back to the animation.
     const jump = folder.addFolder('멀리뛰기');
     const j = settings.jump;
-    jump.add(j, '활성화').name('멀리뛰기 활성화');
+    jump.add(j, 'enabled').name('멀리뛰기 활성화');
     R(jump, j, 'distance', 0, 20, 0.1, '거리 (m)');
     R(jump, j, 'minRunFraction', 0, 1, 0.01, '달리기 대비 발사 ×');
     R(jump, j, 'landAt', 0.4, 1, 0.01, '조작 복귀 시점');
@@ -1360,7 +1360,7 @@ export class Editor {
     // body instead of planting while the controller travels.
     const hop = folder.addFolder('작은 도약');
     const h = settings.hop;
-    hop.add(h, '활성화').name('작은 도약 활성화');
+    hop.add(h, 'enabled').name('작은 도약 활성화');
     R(hop, h, 'gaitBleed', 0, 1, 0.01, '도약 시 보행');
     R(hop, h, 'landAt', 0.4, 1, 0.01, '발 내려놓는 시점');
     R(hop, h, 'blendIn', 0.01, 0.6, 0.01, '블렌드 인 (초)');
@@ -1395,7 +1395,7 @@ export class Editor {
 
     const e = settings.enemies;
     const enemies = folder.addFolder('적');
-    enemies.add(e, '활성화').name('적 활성화');
+    enemies.add(e, 'enabled').name('적 활성화');
     R(enemies, e, 'count', 0, 20, 1, '동시 존재 수');
     R(enemies, e, 'radius', 2, 40, 0.5, '스폰 반경 (m)');
     R(enemies, e, 'minRadius', 1, 20, 0.5, '최소 거리 (m)');
@@ -1460,7 +1460,7 @@ export class Editor {
     const folder = parent.addFolder(title);
     const R = Editor.range;
 
-    folder.add(config, '활성화').name('활성화');
+    folder.add(config, 'enabled').name('활성화');
 
     // Who the blow goes to. `range` and `cone` decide what can be locked at
     // all; `standoff` is the distance the strike is thrown from, and it is the
@@ -1518,7 +1518,7 @@ export class Editor {
     const R = Editor.range;
     const t = settings.targetRing;
 
-    folder.add(t, '활성화').name('활성화');
+    folder.add(t, 'enabled').name('활성화');
     folder.addColor(t, 'color').name('색상');
     R(folder, t, 'radius', 0.2, 3, 0.01, '반경 (m)');
     R(folder, t, 'falloff', 0.2, 12, 0.1, '가장자리 감쇠');
@@ -1533,7 +1533,7 @@ export class Editor {
     // The caps ride the ring's own fades, so there is nothing here but where
     // they sit and how big they are.
     const keys = folder.addFolder('머리 위 단축키 표시');
-    keys.add(t.hotkeys, '활성화').name('활성화');
+    keys.add(t.hotkeys, 'enabled').name('활성화');
     R(keys, t.hotkeys, 'lift', 0, 2, 0.01, '머리 위 (m)');
     R(keys, t.hotkeys, 'scale', 0.5, 2.5, 0.05, '크기 ×');
   }
@@ -1557,7 +1557,7 @@ export class Editor {
     const R = Editor.range;
     const s = settings.slice;
 
-    folder.add(s, '활성화').name('베기 활성화');
+    folder.add(s, 'enabled').name('베기 활성화');
 
     const plane = folder.addFolder('참격 (타격 시 표시)');
     R(plane, s, 'height', 0.1, 0.9, 0.01, '절단 위치 (× 키)');
@@ -1577,7 +1577,7 @@ export class Editor {
     // way to see what it is doing.
     const hit = folder.addFolder('두 반쪽의 상호작용');
     const c = s.collide;
-    hit.add(c, '활성화').name('반쪽끼리 충돌');
+    hit.add(c, 'enabled').name('반쪽끼리 충돌');
     R(hit, c, 'radius', 0, 0.3, 0.005, '관절 크기 (m)');
     R(hit, c, 'bounce', 0, 1, 0.01, '반발');
     R(hit, c, 'friction', 0, 1, 0.01, 'grip');
@@ -1594,7 +1594,7 @@ export class Editor {
 
     const blood = folder.addFolder('피');
     const b = s.blood;
-    blood.add(b, '활성화').name('피 활성화');
+    blood.add(b, 'enabled').name('피 활성화');
     blood.addColor(b, 'color').name('피 색상');
     R(blood, b, 'brightness', 0, 4, 0.05, '밝기');
     R(blood, b, 'burst', 0, 600, 5, '절단면 방울');
@@ -1698,7 +1698,7 @@ export class Editor {
 
     const post = folder.addFolder('등급');
     const p = s.post;
-    post.add(p, '활성화').name('활성화');
+    post.add(p, 'enabled').name('활성화');
     R(post, p, 'exposure', 0.1, 3, 0.01, '노출');
     R(post, p, 'bloomStrength', 0, 3, 0.01, '블룸 강도');
     R(post, p, 'bloomRadius', 0, 1.5, 0.01, '블룸 반경');

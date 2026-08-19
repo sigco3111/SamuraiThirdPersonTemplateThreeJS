@@ -240,12 +240,12 @@ export class App {
       // The last lock is deliberately not announced — the pair stepping out of
       // the body says it, and a line of text on top of that is noise.
       onMark: (count, wanted) => {
-        if (count < wanted) this.toast.show(`Marked ${count} of ${wanted}`);
+        if (count < wanted) this.toast.show(`${wanted}명 중 ${count}명 표시됨`);
       },
-      onCancel: () => this.toast.show('The mark fades'),
+      onCancel: () => this.toast.show('표시가 사라짐'),
       onComplete: (targets) => {
         this.shadows.summon(targets);
-        this.toast.show('Two shadows step out and go for them');
+        this.toast.show('그림자 둘이 나와서 적에게로 향함');
       }
     });
     this.judgeMarking = new TargetMarking({
@@ -253,9 +253,9 @@ export class App {
       enemies: this.enemies,
       domElement: this.canvas,
       config: () => settings.judgement.marking,
-      onCancel: () => this.toast.show('The mark fades'),
+      onCancel: () => this.toast.show('표시가 사라짐'),
       onComplete: (targets) => {
-        if (this.judgement.cast(targets[0])) this.toast.show('Judgement — something reaches through');
+        if (this.judgement.cast(targets[0])) this.toast.show('심판 — 무언가가 관통하여 도달함');
       }
     });
 
@@ -304,7 +304,7 @@ export class App {
       getWeaponFire: () => this.weaponFire,
       onRespawnEnemies: () => {
         this.enemies.respawnAll();
-        this.toast.show('A fresh ring of them');
+        this.toast.show('새로운 원이 생성됨');
       },
       onCastJudgement: () => this._castJudgement()
     });
@@ -355,7 +355,7 @@ export class App {
       switch (event.code) {
         case 'KeyP':
           this.paused = !this.paused;
-          this.toast.show(this.paused ? 'Paused — the editor still applies' : 'Resumed');
+          this.toast.show(this.paused ? '일시정지 — 에디터는 여전히 적용됨' : '재개됨');
           break;
         case 'KeyG':
           this.editor.toggle();
@@ -398,7 +398,7 @@ export class App {
           // pair back, throw a half-taken mark away, or start taking one.
           if (this.shadows.active) {
             this.shadows.dismiss();
-            this.toast.show('The shadows burn away');
+            this.toast.show('그림자가 불타 사라짐');
           } else if (this.marking.active) {
             this.marking.cancel();
           } else {
@@ -407,7 +407,7 @@ export class App {
             // line below says which one is up now.
             this.judgeMarking.end();
             const wanted = this.marking.begin();
-            this.toast.show(`Look at a body and click to mark it — ${wanted} of them`);
+            this.toast.show(`적을 바라보고 클릭해 표시하세요 — ${wanted}명`);
           }
           break;
         }
@@ -418,13 +418,13 @@ export class App {
           // fist already on its way through cannot be called back, and the
           // press says so rather than being swallowed.
           if (this.judgement.active) {
-            this.toast.show('It is already coming down');
+            this.toast.show('이미 소환 중입니다');
           } else if (this.judgeMarking.active) {
             this.judgeMarking.cancel();
           } else {
             this.marking.end();
             this.judgeMarking.begin();
-            this.toast.show('Look at a body and click to call it down on');
+            this.toast.show('적을 바라보고 클릭해 그 위에 소환하세요');
           }
           break;
         }
@@ -461,7 +461,7 @@ export class App {
    */
   _groundedOnly() {
     if (!this.character.flight?.active) return false;
-    this.toast.show('Not from up here — X to come down first');
+    this.toast.show('여기서는 안 됨 — X로 먼저 내려온 후 사용');
     return true;
   }
 
@@ -479,7 +479,7 @@ export class App {
   _toggleFlight() {
     const flight = this.character.flight;
     if (!flight?.available) {
-      this.toast.show('The float clip did not load — flight is unavailable');
+      this.toast.show('비행 클립 로드 실패 — 비행 사용 불가');
       return;
     }
 
@@ -496,7 +496,7 @@ export class App {
     }
 
     if (!settings.flight.enabled) {
-      this.toast.show('Flight is switched off in the editor');
+      this.toast.show('에디터에서 비행이 꺼져 있습니다');
       return;
     }
 
@@ -519,7 +519,7 @@ export class App {
 
     flight.start();
     this.flightMarking.begin();
-    this.toast.show('Airborne — click a body to forge a blade for it · Space looses them');
+    this.toast.show('공중 — 적을 클릭해 칼날 생성 · Space로 발사');
   }
 
   /**
@@ -532,8 +532,8 @@ export class App {
    */
   _forgeBlade(enemy) {
     const result = this.blades.mark(enemy);
-    if (result === 'full') this.toast.show('The ring is full — Space');
-    else if (result === 'unavailable') this.toast.show('Nothing to forge a blade from');
+    if (result === 'full') this.toast.show('링이 가득 찼습니다 — Space로 발사');
+    else if (result === 'unavailable') this.toast.show('칼날로 만들 대상이 없습니다');
     // A duplicate is a mis-click on a body that already has one coming, and
     // saying so every time would be noise.
 
@@ -543,8 +543,8 @@ export class App {
   /** Loose whatever is hanging, and say what went. */
   _loose() {
     const sent = this.blades.launch();
-    if (sent > 0) this.toast.show(`${sent} away`);
-    else this.toast.show('Nothing hanging — click a body first');
+    if (sent > 0) this.toast.show(`${sent}개 발사됨`);
+    else this.toast.show('걸린 것이 없음 — 먼저 적을 클릭하세요');
   }
 
   /**
@@ -588,7 +588,7 @@ export class App {
     this.targetMarkers.clear();
     this.rig.controls.enabled = false;
     this.post.setView(screen.stage.scene, screen.camera.camera);
-    this.toast.show('Character screen — drag to orbit · right-drag to pan · wheel to zoom');
+    this.toast.show('캐릭터 화면 — 드래그로 회전 · 우클릭 드래그로 팬 · 휠로 줌');
   }
 
   /**
@@ -844,16 +844,16 @@ export class App {
       best = enemy;
     }
 
-    if (!best) this.toast.show('Nothing standing to call it down on');
-    else if (!this.judgement.cast(best)) this.toast.show('It is already coming down');
-    else this.toast.show('Judgement — something reaches through');
+    if (!best) this.toast.show('소환할 적 대상이 없습니다');
+    else if (!this.judgement.cast(best)) this.toast.show('이미 소환 중입니다');
+    else this.toast.show('심판 — 무언가가 관통하여 도달함');
   }
 
   /** However the screen was closed, the play stage comes back here. */
   _onScreenExit() {
     this.rig.controls.enabled = true;
     this.post.setView(this.scene, this.camera);
-    this.toast.show('Back on the stage');
+    this.toast.show('무대로 복귀');
   }
 
   /* ------------------------------------------------------------------ */
@@ -957,7 +957,7 @@ export class App {
     this.loading.hide();
     // The moves are named by the row along the bottom, so this only has to
     // cover what the row does not: the stick, and where to look for the rest.
-    this.toast.show('WASD to move · Shift to run · your moves are along the bottom');
+    this.toast.show('WASD 이동 · Shift로 달리기 · 액션은 화면 하단에 표시됨');
 
     this.start();
   }

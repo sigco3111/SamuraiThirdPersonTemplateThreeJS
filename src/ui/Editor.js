@@ -99,7 +99,7 @@ export class Editor {
             this.presets.save(state.name);
             state.selected = state.name;
             refreshOptions();
-            this.hooks.onToast?.(`Saved preset "${state.name}"`);
+            this.hooks.onToast?.(`"${state.name}" 프리셋이 저장되었습니다`);
           }
         },
         'save'
@@ -112,7 +112,7 @@ export class Editor {
           load: () => {
             if (this.presets.load(state.selected)) {
               this.refresh();
-              this.hooks.onToast?.(`Loaded "${state.selected}"`);
+              this.hooks.onToast?.(`"${state.selected}"을(를) 불러왔습니다`);
             }
           }
         },
@@ -128,7 +128,7 @@ export class Editor {
             if (copy) {
               state.selected = copy;
               refreshOptions();
-              this.hooks.onToast?.(`Duplicated to "${copy}"`);
+              this.hooks.onToast?.(`"${copy}"(으)로 복제되었습니다`);
             }
           }
         },
@@ -487,7 +487,7 @@ export class Editor {
       .add(t, 'segments', [64, 128, 192, 256, 384, 512, 768])
       .name('바닥 메시 디테일')
       .onChange((value) => {
-        this.hooks.onToast?.(`Floor grid: ${(400 / value).toFixed(2)} m between vertices`);
+        this.hooks.onToast?.(`바닥 그리드: 정점 간격 ${(400 / value).toFixed(2)} m`);
       });
   }
 

@@ -828,7 +828,7 @@ export class Editor {
     const li = f.light;
     light.add(li, 'enabled').name('활성화');
     R(light, li, 'intensity', 0, 60, 0.1, '강도 (cd)');
-    R(light, li, '거리', 0.5, 15, 0.1, '도달 거리 (m)');
+    R(light, li, 'distance', 0.5, 15, 0.1, '도달 거리 (m)');
     R(light, li, 'decay', 0, 3, 0.01, '감쇠');
     light.addColor(li, 'color').name('색상');
     R(light, li, 'flicker', 0, 1, 0.01, '깜빡임');
@@ -1093,7 +1093,7 @@ export class Editor {
     R(light, l, 'intensity', 0, 60, 0.5, '모으는 동안');
     R(light, l, 'flash', 0, 400, 1, '접촉 시');
     R(light, l, 'flashTime', 0.05, 2, 0.01, '섬광 페이드 (초)');
-    R(light, l, '거리', 1, 40, 0.5, '도달 거리 (m)');
+    R(light, l, 'distance', 1, 40, 0.5, '도달 거리 (m)');
     R(light, l, 'decay', 0.5, 3, 0.05, '감쇠');
   }
 
@@ -1120,7 +1120,7 @@ export class Editor {
     R(air, f, 'takeoff', 0.1, 3, 0.01, '상승 시간 (초)');
     R(air, f, 'land', 0.1, 3, 0.01, '하강 시간 (초)');
     R(air, f, 'acceleration', 1, 40, 0.5, '가속 (m/s²)');
-    R(air, f, '감속', 1, 40, 0.5, '감속 (m/s²)');
+    R(air, f, 'deceleration', 1, 40, 0.5, '감속 (m/s²)');
     // Lower is snappier: it is the fraction of the heading gap left after a
     // second, and the bank below is drawn off how fast that gap closes.
     R(air, f, 'turnRate', 0.0001, 0.2, 0.0001, '회전 (1초 후 남는 간격)');
@@ -1237,7 +1237,7 @@ export class Editor {
     R(light, li, 'intensity', 0, 60, 0.5, '모이는 동안');
     R(light, li, 'flash', 0, 300, 1, '접촉 시');
     R(light, li, 'flashTime', 0.05, 2, 0.01, '섬광 페이드 (초)');
-    R(light, li, '거리', 1, 40, 0.5, '도달 거리 (m)');
+    R(light, li, 'distance', 1, 40, 0.5, '도달 거리 (m)');
     R(light, li, 'decay', 0.5, 3, 0.05, '감쇠');
   }
 
@@ -1271,7 +1271,7 @@ export class Editor {
     const R = Editor.range;
 
     // The wheel writes `distance` straight into settings, so the slider listens.
-    R(folder, c, '거리', 1, 40, 0.1, '거리').listen();
+    R(folder, c, 'distance', 1, 40, 0.1, '거리').listen();
     R(folder, c, 'minDistance', 1, 20, 0.1, '최소 거리');
     R(folder, c, 'maxDistance', 4, 40, 0.1, '최대 거리');
     R(folder, c, 'zoomSpeed', 0.1, 3, 0.01, '줌 속도');
@@ -1297,7 +1297,7 @@ export class Editor {
 
     // The turntable advances `facing` itself, so that slider listens.
     R(folder, c, 'spin', -0.5, 0.5, 0.005, '턴테이블 (rev/s)');
-    R(folder, c, '방향', -Math.PI, Math.PI * 3, 0.01, '방향').listen();
+    R(folder, c, 'facing', -Math.PI, Math.PI * 3, 0.01, '방향').listen();
 
     // The skin's response to the stage's lights. The body wears the glTF
     // palette's authored maps, so these two only reach it once the override is
@@ -1326,7 +1326,7 @@ export class Editor {
     R(folder, l, 'walkSpeed', 0.2, 4, 0.01, '걷기 (m/s)');
     R(folder, l, 'runSpeed', 1, 12, 0.01, '달리기 (m/s)');
     R(folder, l, 'acceleration', 1, 60, 0.1, '가속');
-    R(folder, l, '감속', 1, 60, 0.1, '감속');
+    R(folder, l, 'deceleration', 1, 60, 0.1, '감속');
     R(folder, l, 'blendRate', 0.000001, 0.05, 0.000001, '블렌드 추종');
 
     const gait = folder.addFolder('보행');
@@ -1348,7 +1348,7 @@ export class Editor {
     const jump = folder.addFolder('멀리뛰기');
     const j = settings.jump;
     jump.add(j, 'enabled').name('멀리뛰기 활성화');
-    R(jump, j, '거리', 0, 20, 0.1, '거리 (m)');
+    R(jump, j, 'distance', 0, 20, 0.1, '거리 (m)');
     R(jump, j, 'minRunFraction', 0, 1, 0.01, '달리기 대비 발사 ×');
     R(jump, j, 'landAt', 0.4, 1, 0.01, '조작 복귀 시점');
     R(jump, j, 'blendIn', 0.01, 0.6, 0.01, '블렌드 인 (초)');

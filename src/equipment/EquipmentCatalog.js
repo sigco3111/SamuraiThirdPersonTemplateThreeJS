@@ -39,14 +39,14 @@
 export const CATEGORIES = [
   {
     id: 'weapons',
-    label: 'Weapons',
+    label: '무기',
     /** Held gear. Everything here will eventually answer to combat state. */
-    hint: 'Held gear — the category future combat work hangs off.'
+    hint: '장착하는 장비 — 향후 전투 시스템이 이 범주에서 확장됩니다.'
   },
   {
     id: 'attachments',
-    label: 'Attachments',
-    hint: 'Cosmetic. Rides the skeleton and does nothing else.'
+    label: '장식',
+    hint: '장식용. 스켈레톤에 따라다닐 뿐 다른 기능은 없습니다.'
   }
 ];
 
@@ -57,7 +57,7 @@ export const ITEMS = [
     name: 'Katana',
     category: 'weapons',
     url: './models/weapons/sword.glb',
-    note: 'Blade runs down +Z from the guard.',
+    note: '칼날은 가드에서 +Z 방향으로 뻗어 있습니다.',
     // Worn from the first frame — the character is never seen unarmed, and the
     // screen cannot take it off: combat and its VFX assume the blade is there.
     equipByDefault: true,
@@ -74,7 +74,7 @@ export const ITEMS = [
     name: 'Scabbard',
     category: 'attachments',
     url: './models/attachements/Scabbard.glb',
-    note: 'Sits on the left hip, mouth forward.',
+    note: '왼쪽 허리에 자리하며 입이 앞을 향합니다.',
     defaults: {
       bone: 'Hips',
       position: [0.12, 0.02, 0],
@@ -87,7 +87,7 @@ export const ITEMS = [
     name: 'Potion',
     category: 'attachments',
     url: './models/attachements/Potion.glb',
-    note: 'Belt flask.',
+    note: '허리띠에 차는 플라스크.',
     defaults: {
       bone: 'Spine',
       position: [-0.14, 0, 0.06],

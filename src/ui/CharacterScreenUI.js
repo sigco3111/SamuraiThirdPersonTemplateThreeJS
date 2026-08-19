@@ -53,7 +53,7 @@ export class CharacterScreenUI {
     const bar = el('header', 'cs__bar');
 
     const brand = el('div', 'cs__brand');
-    brand.innerHTML = '<i class="cs__pip"></i><span>Character</span>';
+    brand.innerHTML = '<i class="cs__pip"></i><span>캐릭터</span>';
     bar.append(brand);
 
     bar.append(
@@ -102,7 +102,7 @@ export class CharacterScreenUI {
     );
 
     this.turntable = slider({
-      label: 'Turntable',
+      label: '턴테이블',
       min: -0.3,
       max: 0.3,
       step: 0.005,
@@ -205,7 +205,7 @@ export class CharacterScreenUI {
 
     /* ---- scale ---- */
     this.scale = slider({
-      label: 'Scale',
+      label: '크기',
       min: 0.1,
       max: 3,
       step: 0.01,

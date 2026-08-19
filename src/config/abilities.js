@@ -36,11 +36,11 @@ export const CATEGORIES = {
    * Getting somewhere, and getting dressed. Quiet, above the rest — neither is
    * a way to hurt anyone, and neither should compete with the panels that are.
    */
-  movement: { id: 'movement', label: 'Movement', kanji: '歩', row: 'top' },
+  movement: { id: 'movement', label: '이동', kanji: '歩', row: 'top' },
   /** Sword and body. The three the fight is actually fought with. */
-  technique: { id: 'technique', label: 'Techniques', kanji: '技', row: 'main' },
+  technique: { id: 'technique', label: '기술', kanji: '技', row: 'main' },
   /** The rarer things. Both of them are aimed by marking a body first. */
-  ability: { id: 'ability', label: 'Abilities', kanji: '術', row: 'main' }
+  ability: { id: 'ability', label: '술법', kanji: '術', row: 'main' }
 };
 
 /**
@@ -59,71 +59,71 @@ export const ABILITIES = [
   {
     id: 'leap',
     category: 'movement',
-    label: 'Leap',
+    label: '도약',
     hotkey: 'Space',
     code: 'Space',
-    note: 'A running long jump. At any lesser pace it is a hop instead.'
+    note: '달리며 멀리 뛰어오릅니다. 더 느린 속도에서는 작은 도약이 됩니다.'
   },
   {
     id: 'customize',
     category: 'movement',
-    label: 'Character',
+    label: '캐릭터',
     hotkey: 'Tab',
     code: 'Tab',
-    note: 'The equipment studio: a stage of its own, for looking at the body and dressing it.'
+    note: '장비 스튜디오: 몸을 살펴보고 의상을 입히는 전용 무대입니다.'
   },
   {
     id: 'kick',
     category: 'technique',
-    label: 'Kick',
+    label: '킥',
     hotkey: 'E',
     code: 'KeyE',
-    note: 'Steps onto the nearest body in front of you and plants a foot in it.',
+    note: '가장 가까운 적에게 올라타 발을 박아넣습니다.',
     attack: true
   },
   {
     id: 'slashHit',
     category: 'technique',
-    label: 'Slash Hit',
+    label: '참격',
     hotkey: 'R',
     code: 'KeyR',
-    note: 'Steps in and opens it across the waist. Longer reach, and it cuts.',
+    note: '접근하여 허리를 가로지르게 베어 엽니다. 사거리가 길고 실제로 베입니다.',
     attack: true
   },
   {
     id: 'crouchSlash',
     category: 'technique',
-    label: 'Slide Cut',
+    label: '슬라이드 베기',
     hotkey: 'T',
     code: 'KeyT',
-    note: 'Runs it down, drops into a slide and opens it on the way past.',
+    note: '달려가다가 미끄러져 내려앉으며 지나가는 길에 베어 엽니다.',
     attack: true
   },
   {
     id: 'shadows',
     category: 'ability',
-    label: 'Shadows',
+    label: '그림자',
     hotkey: 'V',
     code: 'KeyV',
-    note: 'Look at two bodies and click to mark them. A shadow of you goes for each.'
+    note: '두 적을 바라보고 클릭해 표시하세요. 각각 당신의 그림자가 달려갑니다.'
   },
   {
     id: 'judgement',
     category: 'ability',
-    label: 'Judgement',
+    label: '심판',
     hotkey: 'C',
     code: 'KeyC',
-    note: 'Mark one body. A seal opens over its head and a fist comes down through it.'
+    note: '적 한 명을 표시하세요. 머리 위에 인이 펼쳐지고 주먹이 내려꽂힙니다.'
   },
   {
     id: 'flight',
     category: 'ability',
-    label: 'Flight',
+    label: '비행',
     hotkey: 'X',
     code: 'KeyX',
     note:
-      'Leave the ground. Click bodies to forge a blade for each, Space looses them — ' +
-      'and nothing else works while you are up there.'
+      '지면에서 벗어나세요. 적을 클릭해 각각 칼날을 만들고, Space로 발사합니다 — ' +
+      '공중에 떠 있는 동안에는 다른 조작이 동작하지 않습니다.'
   }
 ];
 

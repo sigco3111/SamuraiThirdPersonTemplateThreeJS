@@ -41,10 +41,10 @@ export class Stats {
     headline.append(this._fps, el('span', 'stats__unit', 'fps'));
 
     const rows = el('dl', 'stats__rows');
-    this._frame = row(rows, 'frame');
-    this._peakOut = row(rows, 'peak');
-    this._draws = row(rows, 'draws');
-    this._tris = row(rows, 'tris');
+    this._frame = row(rows, '프레임');
+    this._peakOut = row(rows, '최대');
+    this._draws = row(rows, '드로우');
+    this._tris = row(rows, '삼각형');
 
     this.root.append(headline, rows);
     parent.appendChild(this.root);

@@ -28,7 +28,7 @@ export class Editor {
     this.gui = new GUI({ title: '스테이지 에디터', width: 330 });
     this.gui.domElement.style.setProperty('--title-height', '30px');
 
-    this._presetState = { name: 'My preset', selected: this.presets.names[0] ?? '' };
+    this._presetState = { name: '내 프리셋', selected: this.presets.names[0] ?? '' };
     this._hidden = false;
 
     this._buildPresets();
@@ -164,10 +164,10 @@ export class Editor {
             this.refresh();
             this.hooks.onToast?.(
               result.applied
-                ? 'Settings imported'
+                ? '설정을 가져왔습니다'
                 : result.imported.length
                   ? `Imported ${result.imported.length} preset(s)`
-                  : 'Nothing imported'
+                  : '가져올 항목이 없습니다'
             );
           }
         },
@@ -627,7 +627,7 @@ export class Editor {
     R(fall, d, 'tumble', 0, 4, 0.01, '회전 종료');
     R(fall, d, 'yawDrift', 0, 3, 0.01, '요 드리프트 (rad/s)');
     // What makes one land instead of stopping dead on its edge.
-    R(fall, d, 'settle', 0.05, 5, 0.05, 'flatten over (m)');
+    R(fall, d, 'settle', 0.05, 5, 0.05, '평탄화 거리 (m)');
     R(fall, d, 'hover', 0, 0.3, 0.005, '바닥 위 휴지 (m)');
 
     const seen = drift.addFolder('페이드');
@@ -671,7 +671,7 @@ export class Editor {
           refit: () => {
             const fire = weapon();
             this.hooks.onToast?.(
-              fire?.refit() ? 'Fire box refitted to the weapon' : 'No weapon equipped'
+              fire?.refit() ? '불꽃 박스를 무기에 재맞춤했습니다' : '장착된 무기가 없습니다'
             );
           }
         },
@@ -682,23 +682,23 @@ export class Editor {
     const readout = {
       get faces() {
         const fire = weapon();
-        return fire ? `${fire.faceCount} faces alight` : 'no weapon';
+        return fire ? `${fire.faceCount} 면 발화` : '무기 없음';
       }
     };
     box.add(readout, 'faces').name('방출 중').disable().listen();
 
-    R(box, b, 'x', -1, 1, 0.001, 'offset X (m)').listen();
-    R(box, b, 'y', -1, 1, 0.001, 'offset Y (m)').listen();
-    R(box, b, 'z', -1, 1, 0.001, 'offset Z (m)').listen();
-    R(box, b, 'rotX', -180, 180, 0.5, 'rotate X (°)').listen();
-    R(box, b, 'rotY', -180, 180, 0.5, 'rotate Y (°)').listen();
-    R(box, b, 'rotZ', -180, 180, 0.5, 'rotate Z (°)').listen();
-    R(box, b, 'scaleX', 0.02, 4, 0.01, 'scale X').listen();
-    R(box, b, 'scaleY', 0.02, 4, 0.01, 'scale Y').listen();
-    R(box, b, 'scaleZ', 0.02, 4, 0.01, 'scale Z').listen();
-    R(box, b, 'sizeX', 0.005, 2, 0.001, 'size X (m)').listen();
-    R(box, b, 'sizeY', 0.005, 2, 0.001, 'size Y (m)').listen();
-    R(box, b, 'sizeZ', 0.005, 2, 0.001, 'size Z (m)').listen();
+    R(box, b, 'x', -1, 1, 0.001, 'X 오프셋 (m)').listen();
+    R(box, b, 'y', -1, 1, 0.001, 'Y 오프셋 (m)').listen();
+    R(box, b, 'z', -1, 1, 0.001, 'Z 오프셋 (m)').listen();
+    R(box, b, 'rotX', -180, 180, 0.5, 'X 회전 (°)').listen();
+    R(box, b, 'rotY', -180, 180, 0.5, 'Y 회전 (°)').listen();
+    R(box, b, 'rotZ', -180, 180, 0.5, 'Z 회전 (°)').listen();
+    R(box, b, 'scaleX', 0.02, 4, 0.01, 'X 크기').listen();
+    R(box, b, 'scaleY', 0.02, 4, 0.01, 'Y 크기').listen();
+    R(box, b, 'scaleZ', 0.02, 4, 0.01, 'Z 크기').listen();
+    R(box, b, 'sizeX', 0.005, 2, 0.001, 'X 크기 (m)').listen();
+    R(box, b, 'sizeY', 0.005, 2, 0.001, 'Y 크기 (m)').listen();
+    R(box, b, 'sizeZ', 0.005, 2, 0.001, 'Z 크기 (m)').listen();
 
     // The flame body: a raymarched black-body volume wrapped around a distance
     // field of the selected faces. `thickness` is the first dial to reach for —
@@ -786,7 +786,7 @@ export class Editor {
     const live = {
       get count() {
         const fire = weapon();
-        return fire ? `${fire.emberCount} in flight` : 'no weapon';
+        return fire ? `${fire.emberCount} 비행 중` : '무기 없음';
       }
     };
     embers.add(live, 'count').name('스파크').disable().listen();
@@ -828,7 +828,7 @@ export class Editor {
     const li = f.light;
     light.add(li, 'enabled').name('활성화');
     R(light, li, 'intensity', 0, 60, 0.1, '강도 (cd)');
-    R(light, li, 'distance', 0.5, 15, 0.1, '도달 거리 (m)');
+    R(light, li, '거리', 0.5, 15, 0.1, '도달 거리 (m)');
     R(light, li, 'decay', 0, 3, 0.01, '감쇠');
     light.addColor(li, 'color').name('색상');
     R(light, li, 'flicker', 0, 1, 0.01, '깜빡임');
@@ -880,8 +880,8 @@ export class Editor {
     R(marker, ml, 'pulse', 0, 1, 0.01, '호흡 깊이');
     R(marker, ml, 'pulseSpeed', 0, 20, 0.1, '호흡 속도');
     R(marker, ml, 'pop', 0, 2, 0.01, '잠금 스냅');
-    R(marker, ml, 'fadeIn', 0.01, 1, 0.01, 'fade in (s)');
-    R(marker, ml, 'fadeOut', 0.01, 1, 0.01, 'fade out (s)');
+    R(marker, ml, 'fadeIn', 0.01, 1, 0.01, '페이드 인 (초)');
+    R(marker, ml, 'fadeOut', 0.01, 1, 0.01, '페이드 아웃 (초)');
 
     // The errand: from the crouch to the blow landing. Where the run stops is
     // the striking move's own `standoff` under Combat, the ground its warp
@@ -901,7 +901,7 @@ export class Editor {
     const strike = folder.addFolder('강타');
     const st = s.strike;
     strike
-      .add(st, 'move', { 'slide cut': 'crouchSlash', 'slash hit': 'slashHit', kick: 'kick' })
+      .add(st, 'move', { '슬라이드 베기': 'crouchSlash', '참격': 'slashHit', kick: 'kick' })
       .name('마무리');
     R(strike, st, 'lead', 0.2, 2, 0.01, '브레이크 ↔ 돌진');
 
@@ -917,7 +917,7 @@ export class Editor {
 
     // The dark. Not quite black on purpose — see the note in settings.js.
     const dark = folder.addFolder('어둠');
-    dark.addColor(s, 'color').name('body colour');
+    dark.addColor(s, 'color').name('몸 색상');
     R(dark, s, 'roughness', 0, 1, 0.01, '거칠기');
     R(dark, s, 'metalness', 0, 1, 0.01, '금속성');
 
@@ -979,7 +979,7 @@ export class Editor {
     const seal = folder.addFolder('인');
     const s = j.seal;
     R(seal, s, 'radius', 0.4, 5, 0.05, '반경 (m)');
-    seal.addColor(s, 'color').name('line colour');
+    seal.addColor(s, 'color').name('라인 색상');
     seal.addColor(s, 'coreColor').name('코어 색상');
     R(seal, s, 'intensity', 0, 8, 0.05, '밝기');
     R(seal, s, 'spin', -2, 2, 0.01, '초당 회전 수');
@@ -999,12 +999,12 @@ export class Editor {
     const f = j.fist;
     R(fist, f, 'scale', 0.4, 4, 0.01, '크기 ×');
     R(fist, f, 'crush', 0, 1.5, 0.01, '지면 위 정지 (m)');
-    fist.addColor(f, 'color').name('body colour');
+    fist.addColor(f, 'color').name('몸 색상');
     R(fist, f, 'roughness', 0, 1, 0.01, '거칠기');
     R(fist, f, 'metalness', 0, 1, 0.01, '금속성');
     R(fist, f, 'normalScale', 0, 3, 0.01, '요철 깊이');
     R(fist, f, 'flash', 0, 10, 0.05, '접촉 섬광');
-    R(fist, f, 'flashTime', 0.02, 1, 0.01, 'flash fades (s)');
+    R(fist, f, 'flashTime', 0.02, 1, 0.01, '섬광 페이드 (초)');
 
     const rim = fist.addFolder('프레넬 림');
     const fr = f.fresnel;
@@ -1027,7 +1027,7 @@ export class Editor {
 
     const birth = fist.addFolder('인을 관통하여');
     const bl = f.birth;
-    birth.addColor(bl, 'color').name('line colour');
+    birth.addColor(bl, 'color').name('라인 색상');
     R(birth, bl, 'emissive', 0, 12, 0.05, '라인 발광');
     R(birth, bl, 'width', 0.01, 1, 0.005, '라인 폭 (m)');
 
@@ -1089,11 +1089,11 @@ export class Editor {
     const l = j.light;
     light.add(l, 'enabled').name('활성화');
     light.addColor(l, 'color').name('인 색상');
-    light.addColor(l, 'flashColor').name('contact colour');
+    light.addColor(l, 'flashColor').name('접촉 색상');
     R(light, l, 'intensity', 0, 60, 0.5, '모으는 동안');
     R(light, l, 'flash', 0, 400, 1, '접촉 시');
-    R(light, l, 'flashTime', 0.05, 2, 0.01, 'flash fades (s)');
-    R(light, l, 'distance', 1, 40, 0.5, '도달 거리 (m)');
+    R(light, l, 'flashTime', 0.05, 2, 0.01, '섬광 페이드 (초)');
+    R(light, l, '거리', 1, 40, 0.5, '도달 거리 (m)');
     R(light, l, 'decay', 0.5, 3, 0.05, '감쇠');
   }
 
@@ -1120,7 +1120,7 @@ export class Editor {
     R(air, f, 'takeoff', 0.1, 3, 0.01, '상승 시간 (초)');
     R(air, f, 'land', 0.1, 3, 0.01, '하강 시간 (초)');
     R(air, f, 'acceleration', 1, 40, 0.5, '가속 (m/s²)');
-    R(air, f, 'deceleration', 1, 40, 0.5, '감속 (m/s²)');
+    R(air, f, '감속', 1, 40, 0.5, '감속 (m/s²)');
     // Lower is snappier: it is the fraction of the heading gap left after a
     // second, and the bank below is drawn off how fast that gap closes.
     R(air, f, 'turnRate', 0.0001, 0.2, 0.0001, '회전 (1초 후 남는 간격)');
@@ -1211,7 +1211,7 @@ export class Editor {
     const im = b.impact;
     hit.add(im, 'enabled').name('활성화');
     hit.addColor(im, 'color').name('섬광 색상');
-    hit.addColor(im, 'ringColor').name('ring colour');
+    hit.addColor(im, 'ringColor').name('링 색상');
     R(hit, im, 'size', 0.2, 6, 0.05, '크기 (m)');
     R(hit, im, 'life', 0.05, 2, 0.01, '지속 (초)');
     R(hit, im, 'intensity', 0, 10, 0.05, '밝기');
@@ -1232,12 +1232,12 @@ export class Editor {
     const light = blades.addFolder('그 빛');
     const li = b.light;
     light.add(li, 'enabled').name('활성화');
-    light.addColor(li, 'color').name('halo colour');
-    light.addColor(li, 'flashColor').name('contact colour');
+    light.addColor(li, 'color').name('광배 색상');
+    light.addColor(li, 'flashColor').name('접촉 색상');
     R(light, li, 'intensity', 0, 60, 0.5, '모이는 동안');
     R(light, li, 'flash', 0, 300, 1, '접촉 시');
-    R(light, li, 'flashTime', 0.05, 2, 0.01, 'flash fades (s)');
-    R(light, li, 'distance', 1, 40, 0.5, '도달 거리 (m)');
+    R(light, li, 'flashTime', 0.05, 2, 0.01, '섬광 페이드 (초)');
+    R(light, li, '거리', 1, 40, 0.5, '도달 거리 (m)');
     R(light, li, 'decay', 0.5, 3, 0.05, '감쇠');
   }
 
@@ -1271,7 +1271,7 @@ export class Editor {
     const R = Editor.range;
 
     // The wheel writes `distance` straight into settings, so the slider listens.
-    R(folder, c, 'distance', 1, 40, 0.1, 'distance').listen();
+    R(folder, c, '거리', 1, 40, 0.1, '거리').listen();
     R(folder, c, 'minDistance', 1, 20, 0.1, '최소 거리');
     R(folder, c, 'maxDistance', 4, 40, 0.1, '최대 거리');
     R(folder, c, 'zoomSpeed', 0.1, 3, 0.01, '줌 속도');
@@ -1297,7 +1297,7 @@ export class Editor {
 
     // The turntable advances `facing` itself, so that slider listens.
     R(folder, c, 'spin', -0.5, 0.5, 0.005, '턴테이블 (rev/s)');
-    R(folder, c, 'facing', -Math.PI, Math.PI * 3, 0.01, 'facing').listen();
+    R(folder, c, '방향', -Math.PI, Math.PI * 3, 0.01, '방향').listen();
 
     // The skin's response to the stage's lights. The body wears the glTF
     // palette's authored maps, so these two only reach it once the override is
@@ -1326,7 +1326,7 @@ export class Editor {
     R(folder, l, 'walkSpeed', 0.2, 4, 0.01, '걷기 (m/s)');
     R(folder, l, 'runSpeed', 1, 12, 0.01, '달리기 (m/s)');
     R(folder, l, 'acceleration', 1, 60, 0.1, '가속');
-    R(folder, l, 'deceleration', 1, 60, 0.1, 'deceleration');
+    R(folder, l, '감속', 1, 60, 0.1, '감속');
     R(folder, l, 'blendRate', 0.000001, 0.05, 0.000001, '블렌드 추종');
 
     const gait = folder.addFolder('보행');
@@ -1348,7 +1348,7 @@ export class Editor {
     const jump = folder.addFolder('멀리뛰기');
     const j = settings.jump;
     jump.add(j, 'enabled').name('멀리뛰기 활성화');
-    R(jump, j, 'distance', 0, 20, 0.1, '거리 (m)');
+    R(jump, j, '거리', 0, 20, 0.1, '거리 (m)');
     R(jump, j, 'minRunFraction', 0, 1, 0.01, '달리기 대비 발사 ×');
     R(jump, j, 'landAt', 0.4, 1, 0.01, '조작 복귀 시점');
     R(jump, j, 'blendIn', 0.01, 0.6, 0.01, '블렌드 인 (초)');
@@ -1387,9 +1387,9 @@ export class Editor {
     // One folder per move, built from the same three groups — the two attacks
     // are the same machine (`animation/Attack.js`) with different numbers, so
     // there is nothing to say about one of them that is not a field on both.
-    this._buildAttack(folder, settings.kick, 'Kick (E)');
-    this._buildAttack(folder, settings.slashHit, 'Slash hit (R)');
-    this._buildAttack(folder, settings.crouchSlash, 'Slide cut (T)');
+    this._buildAttack(folder, settings.kick, '킥 (E)');
+    this._buildAttack(folder, settings.slashHit, '참격 (R)');
+    this._buildAttack(folder, settings.crouchSlash, '슬라이드 베기 (T)');
     this._buildTargetRing(folder);
     this._buildSlice(folder);
 
@@ -1416,7 +1416,7 @@ export class Editor {
     // Authored rather than imported — the export carries no textures at all.
     const look = enemies.addFolder('외형');
     const el = e.look;
-    look.addColor(el, 'color').name('body colour');
+    look.addColor(el, 'color').name('몸 색상');
     R(look, el, 'roughness', 0, 1, 0.01, '거칠기');
     R(look, el, 'metalness', 0, 1, 0.01, '금속성');
     look.addColor(el, 'rimColor').name('림 라이트 색상');
@@ -1527,8 +1527,8 @@ export class Editor {
     R(folder, t, 'pulse', 0, 1, 0.01, '호흡 깊이');
     R(folder, t, 'pulseSpeed', 0, 12, 0.1, '호흡 속도');
     R(folder, t, 'lift', 0, 0.2, 0.005, '바닥 이탈 (m)');
-    R(folder, t, 'fadeIn', 0.01, 1, 0.01, 'fade in (s)');
-    R(folder, t, 'fadeOut', 0.01, 1, 0.01, 'fade out (s)');
+    R(folder, t, 'fadeIn', 0.01, 1, 0.01, '페이드 인 (초)');
+    R(folder, t, 'fadeOut', 0.01, 1, 0.01, '페이드 아웃 (초)');
 
     // The caps ride the ring's own fades, so there is nothing here but where
     // they sit and how big they are.
@@ -1684,14 +1684,14 @@ export class Editor {
     const st = s.stage;
     stage.addColor(st, 'backdropTop').name('배경 상단');
     stage.addColor(st, 'backdropBottom').name('배경 하단');
-    stage.addColor(st, 'backdropGlow').name('halo colour');
+    stage.addColor(st, 'backdropGlow').name('광배 색상');
     R(stage, st, 'glowStrength', 0, 3, 0.01, '광배 강도');
     R(stage, st, 'glowSpread', 0, 1, 0.01, '광배 확산');
     stage.addColor(st, 'floorColor').name('바닥 색상');
     R(stage, st, 'floorRoughness', 0.02, 1, 0.01, '바닥 거칠기');
     R(stage, st, 'floorMetalness', 0, 1, 0.01, '바닥 금속성');
     R(stage, st, 'floorRadius', 1, 8, 0.05, '대좌 반경 (m)');
-    stage.addColor(st, 'ringColor').name('ring colour');
+    stage.addColor(st, 'ringColor').name('링 색상');
     R(stage, st, 'ringIntensity', 0, 6, 0.01, '링 강도');
     R(stage, st, 'contactShadow', 0, 2, 0.01, '접촉 그림자');
     R(stage, st, 'dust', 0, 3, 0.01, '스튜디오 헤이즈');

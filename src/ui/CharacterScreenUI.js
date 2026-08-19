@@ -57,47 +57,47 @@ export class CharacterScreenUI {
     bar.append(brand);
 
     bar.append(
-      group('Frame', [
-        button('Full', () => this.hooks.onFrame('full')),
-        button('Bust', () => this.hooks.onFrame('bust')),
-        button('Head', () => this.hooks.onFrame('head')),
-        button('Piece', () => this.hooks.onFrame('item'))
+      group('프레임', [
+        button('전신', () => this.hooks.onFrame('full')),
+        button('상반신', () => this.hooks.onFrame('bust')),
+        button('머리', () => this.hooks.onFrame('head')),
+        button('부위', () => this.hooks.onFrame('item'))
       ])
     );
 
     this.gizmoButtons = {
-      translate: button('Move', () => this.hooks.onGizmo('translate')),
-      rotate: button('Rotate', () => this.hooks.onGizmo('rotate')),
+      translate: button('이동', () => this.hooks.onGizmo('translate')),
+      rotate: button('회전', () => this.hooks.onGizmo('rotate')),
       // Scale is the fire box's alone: a piece of equipment is sized by its
       // placement, which the gizmo has no way to write back uniformly.
-      scale: button('Scale', () => this.hooks.onGizmo('scale')),
-      none: button('Off', () => this.hooks.onGizmo('none'))
+      scale: button('크기', () => this.hooks.onGizmo('scale')),
+      none: button('끄기', () => this.hooks.onGizmo('none'))
     };
-    bar.append(group('Gizmo', Object.values(this.gizmoButtons)));
+    bar.append(group('기즈모', Object.values(this.gizmoButtons)));
 
     this.previewButtons = {
       // First in the row because it is the one to tune against: the body holds
       // a single frame of the idle instead of breathing through it.
-      stopped: button('Stopped', () => this.hooks.onPreview('stopped')),
-      idle: button('Idle', () => this.hooks.onPreview('idle')),
-      walk: button('Walk', () => this.hooks.onPreview('walk')),
-      run: button('Run', () => this.hooks.onPreview('run'))
+      stopped: button('정지', () => this.hooks.onPreview('stopped')),
+      idle: button('대기', () => this.hooks.onPreview('idle')),
+      walk: button('걷기', () => this.hooks.onPreview('walk')),
+      run: button('달리기', () => this.hooks.onPreview('run'))
     };
-    bar.append(group('Motion', Object.values(this.previewButtons)));
+    bar.append(group('동작', Object.values(this.previewButtons)));
 
-    this.skeletonToggle = toggle('Skeleton', false, (on) => this.hooks.onSkeleton(on));
-    this.markerToggle = toggle('Joint marker', true, (on) => this.hooks.onMarker(on));
-    bar.append(group('Overlays', [this.skeletonToggle.root, this.markerToggle.root]));
+    this.skeletonToggle = toggle('스켈레톤', false, (on) => this.hooks.onSkeleton(on));
+    this.markerToggle = toggle('관절 마커', true, (on) => this.hooks.onMarker(on));
+    bar.append(group('오버레이', [this.skeletonToggle.root, this.markerToggle.root]));
 
     // The fire's aim, where it is judged: the box is a volume on the weapon, so
     // it is dragged against the body rather than typed at from the stage editor.
-    this.fireToggle = toggle('Flames', settings.fire.enabled, (on) => this.hooks.onFire(on));
-    this.fireBoxToggle = toggle('Edit box', false, (on) => this.hooks.onFireBox(on));
+    this.fireToggle = toggle('불꽃 표시', settings.fire.enabled, (on) => this.hooks.onFire(on));
+    this.fireBoxToggle = toggle('박스 편집', false, (on) => this.hooks.onFireBox(on));
     bar.append(
-      group('Fire', [
+      group('불꽃', [
         this.fireToggle.root,
         this.fireBoxToggle.root,
-        button('Refit', () => this.hooks.onRefitFireBox())
+        button('재맞춤', () => this.hooks.onRefitFireBox())
       ])
     );
 
@@ -109,9 +109,9 @@ export class CharacterScreenUI {
       value: settings.studio.turntable,
       onInput: (value) => this.hooks.onTurntable(value)
     });
-    bar.append(group('Rotate', [this.turntable.root]));
+    bar.append(group('회전', [this.turntable.root]));
 
-    const close = button('Close  ·  Tab', () => this.hooks.onExit());
+    const close = button('닫기 · Tab', () => this.hooks.onExit());
     close.classList.add('cs__close');
     bar.append(close);
 
@@ -142,11 +142,11 @@ export class CharacterScreenUI {
 
     const actions = el('div', 'cs__actions');
     actions.append(
-      button('Save', () => this.hooks.onSave()),
-      button('Load', () => this.hooks.onLoad()),
-      button('Export', () => this.hooks.onExport()),
-      button('Copy defaults', () => this.hooks.onCopy()),
-      button('Clear', () => this.hooks.onClear())
+      button('저장', () => this.hooks.onSave()),
+      button('불러오기', () => this.hooks.onLoad()),
+      button('내보내기', () => this.hooks.onExport()),
+      button('기본값 복사', () => this.hooks.onCopy()),
+      button('초기화', () => this.hooks.onClear())
     );
     rail.append(actions);
 
@@ -161,7 +161,7 @@ export class CharacterScreenUI {
     panel.append(this.inspectorTitle);
 
     this.empty = el('p', 'cs__empty');
-    this.empty.textContent = 'Pick a piece on the left, or click one on the body.';
+    this.empty.textContent = '왼쪽에서 부위를 선택하거나, 몸 위의 부품을 클릭하세요.';
     panel.append(this.empty);
 
     this.body = el('div', 'cs__body');
@@ -173,12 +173,12 @@ export class CharacterScreenUI {
     this.boneSelect.addEventListener('change', () => {
       if (this.selectedId) this.hooks.onBone(this.selectedId, this.boneSelect.value);
     });
-    this.body.append(field('Attached to', this.boneSelect));
+    this.body.append(field('부착 부위', this.boneSelect));
 
     /* ---- offsets ---- */
     this.position = ['x', 'y', 'z'].map((axis, index) =>
       slider({
-        label: `Offset ${axis.toUpperCase()}`,
+        label: `${axis.toUpperCase()} 오프셋`,
         min: -0.6,
         max: 0.6,
         step: 0.001,
@@ -187,12 +187,12 @@ export class CharacterScreenUI {
         onInput: (value) => this._patch('position', index, value)
       })
     );
-    this.body.append(section('Offset — metres, in the joint’s own frame', this.position));
+    this.body.append(section('오프셋 — 관절 좌표계 미터', this.position));
 
     /* ---- rotation ---- */
     this.rotation = ['x', 'y', 'z'].map((axis, index) =>
       slider({
-        label: `Rotate ${axis.toUpperCase()}`,
+        label: `${axis.toUpperCase()} 회전`,
         min: -180,
         max: 180,
         step: 0.5,
@@ -201,7 +201,7 @@ export class CharacterScreenUI {
         onInput: (value) => this._patch('rotation', index, value)
       })
     );
-    this.body.append(section('Rotation — degrees, XYZ', this.rotation));
+    this.body.append(section('회전 — XYZ 각도', this.rotation));
 
     /* ---- scale ---- */
     this.scale = slider({
@@ -214,7 +214,7 @@ export class CharacterScreenUI {
         if (this.selectedId) this.hooks.onPlacement(this.selectedId, { scale: value });
       }
     });
-    this.body.append(section('Size', [this.scale]));
+    this.body.append(section('크기', [this.scale]));
 
     /* ---- mirroring ---- */
     // The piece folded through the body's centre: X puts it on the other side,
@@ -222,12 +222,12 @@ export class CharacterScreenUI {
     // one of it — so the placement below goes on describing the same piece and
     // the gizmo goes on holding it.
     this.mirrorToggles = ['X', 'Y', 'Z'].map((axis, index) =>
-      toggle(`Mirror ${axis}`, false, (on) => {
+      toggle(`${axis} 미러`, false, (on) => {
         if (this.selectedId) this.hooks.onMirror(this.selectedId, index, on);
       })
     );
     const mirrors = section(
-      'Mirror — fold the piece through the body’s centre',
+      '미러 — 몸의 중심을 기준으로 접기',
       this.mirrorToggles.map((control) => control.root)
     );
     mirrors.classList.add('cs__section--inline');
@@ -235,7 +235,7 @@ export class CharacterScreenUI {
 
     // Hidden outright for locked gear (see `refresh`) rather than disabled: the
     // piece is not detachable at all, so the action does not belong on the row.
-    this.detachButton = button('Detach', () => {
+    this.detachButton = button('분리', () => {
       if (this.selectedId && !this.equipment.isLocked(this.selectedId)) {
         this.hooks.onToggleItem(this.selectedId);
       }
@@ -243,7 +243,7 @@ export class CharacterScreenUI {
 
     const actions = el('div', 'cs__row');
     actions.append(
-      button('Reset placement', () => {
+      button('배치 초기화', () => {
         if (this.selectedId) this.hooks.onResetPlacement(this.selectedId);
       }),
       this.detachButton
@@ -286,7 +286,7 @@ export class CharacterScreenUI {
     const rest = bones.filter((bone) => !used.has(bone));
     if (rest.length) {
       const optgroup = document.createElement('optgroup');
-      optgroup.label = 'Other joints';
+      optgroup.label = '기타 관절';
       for (const bone of rest) optgroup.append(option(bone));
       this.boneSelect.append(optgroup);
     }
@@ -362,18 +362,18 @@ export class CharacterScreenUI {
       card.classList.toggle('is-pending', pending);
       card.classList.toggle('is-locked', locked);
       chip.textContent = pending
-        ? 'loading…'
+        ? '불러오는 중…'
         : locked && equipped
-          ? 'locked'
+          ? '잠김'
           : equipped
-            ? 'equipped'
-            : 'equip';
+            ? '장착됨'
+            : '장착';
     }
 
     const slot = this.selectedId ? this.equipment.get(this.selectedId) : null;
     this.body.hidden = !slot;
     this.empty.hidden = !!slot;
-    this.inspectorTitle.textContent = slot ? slot.item.name : 'Nothing selected';
+    this.inspectorTitle.textContent = slot ? slot.item.name : '선택된 항목 없음';
     this.detachButton.hidden = !slot || this.equipment.isLocked(this.selectedId);
 
     if (slot) {

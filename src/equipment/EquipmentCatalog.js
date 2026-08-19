@@ -54,7 +54,7 @@ export const CATEGORIES = [
 export const ITEMS = [
   {
     id: 'sword',
-    name: 'Katana',
+    name: '도검',
     category: 'weapons',
     url: './models/weapons/sword.glb',
     note: '칼날은 가드에서 +Z 방향으로 뻗어 있습니다.',
@@ -71,7 +71,7 @@ export const ITEMS = [
   },
   {
     id: 'scabbard',
-    name: 'Scabbard',
+    name: '칼집',
     category: 'attachments',
     url: './models/attachements/Scabbard.glb',
     note: '왼쪽 허리에 자리하며 입이 앞을 향합니다.',
@@ -84,7 +84,7 @@ export const ITEMS = [
   },
   {
     id: 'potion',
-    name: 'Potion',
+    name: '물약',
     category: 'attachments',
     url: './models/attachements/Potion.glb',
     note: '허리띠에 차는 플라스크.',
@@ -106,11 +106,11 @@ export const ITEMS = [
  * is skipped silently.
  */
 export const ATTACH_POINTS = [
-  { group: 'Hands', bones: ['RightHand', 'LeftHand'] },
-  { group: 'Arms', bones: ['RightForeArm', 'RightArm', 'LeftForeArm', 'LeftArm'] },
-  { group: 'Back & hips', bones: ['Spine2', 'Spine1', 'Spine', 'Hips'] },
-  { group: 'Head', bones: ['Head', 'Neck', 'RightShoulder', 'LeftShoulder'] },
-  { group: 'Legs', bones: ['RightUpLeg', 'RightLeg', 'RightFoot', 'LeftUpLeg', 'LeftLeg', 'LeftFoot'] }
+  { group: '손', bones: ['RightHand', 'LeftHand'] },
+  { group: '팔', bones: ['RightForeArm', 'RightArm', 'LeftForeArm', 'LeftArm'] },
+  { group: '등과 엉덩이', bones: ['Spine2', 'Spine1', 'Spine', 'Hips'] },
+  { group: '머리', bones: ['Head', 'Neck', 'RightShoulder', 'LeftShoulder'] },
+  { group: '다리', bones: ['RightUpLeg', 'RightLeg', 'RightFoot', 'LeftUpLeg', 'LeftLeg', 'LeftFoot'] }
 ];
 
 /** Deep copy of an item's shipped placement — never hand the catalog out live. */

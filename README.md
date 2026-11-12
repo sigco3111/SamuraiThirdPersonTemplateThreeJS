@@ -13,6 +13,10 @@
 
 ---
 
+## 📸 실제 실행 화면
+
+![사무라이 3인칭 템플릿 실제 화면](7-SamuraiThirdPersonTemplateThreeJS.jpg)
+
 ## 🎮 바로 실행해보기
 
 가장 빠르게 확인할 방법은 **GitHub Pages로 배포된 라이브 데모**를 여는 것입니다:
